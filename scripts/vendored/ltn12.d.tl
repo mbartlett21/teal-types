@@ -1,14 +1,14 @@
 local record ltn12
    type Filter = function(string): string, string
 
-   type Sink = function(string, string): boolean, string
+   type Sink = function(string, ? string): boolean, string
 
    -- returns nil, nil to indicate EOF
    type Source = function(): string, string
 
    type RewindSource = function(? string): string, string
 
-   type FancySink = function(string, string): boolean, string | FancySink
+   type FancySink = function(string, ? string): boolean, string | FancySink
    type FancySource = function(): string, string | FancySource
 
    -- Docs just say returns a truthy value on success
@@ -41,7 +41,7 @@ local record ltn12
       rewind: function(Source): RewindSource
       simplify: function(FancySource): Source
       string: function(string): Source
-      table: function({string}): Source, {string}
+      table: function({string}): Source
    end
 end
 
