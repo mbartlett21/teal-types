@@ -1,14 +1,14 @@
 local record ltn12
    type Filter = function(string): string, string
 
-   type Sink = function(string, string): boolean, string
+   type Sink = function(string, ? string): boolean, string
 
    -- returns nil, nil to indicate EOF
    type Source = function(): string, string
 
    type RewindSource = function(? string): string, string
 
-   type FancySink = function(string, string): boolean, string | FancySink
+   type FancySink = function(string, ? string): boolean, string | FancySink
    type FancySource = function(): string, string | FancySource
 
    -- Docs just say returns a truthy value on success
@@ -25,23 +25,32 @@ local record ltn12
       step: Pump
    end
    record sink
-      chain: function(Filter, Sink): Sink -- simplified
+      -- this accepts any number of filters, but this can't be represented nicely
+      -- in Teal's type system
+      chain: function(Filter,                                                         Sink): Sink
+      chain: function(Filter, Filter,                                                 Sink): Sink
+      chain: function(Filter, Filter, Filter,                                         Sink): Sink
+      chain: function(Filter, Filter, Filter, Filter,                                 Sink): Sink
+      chain: function(Filter, Filter, Filter, Filter, Filter,                         Sink): Sink
+      chain: function(Filter, Filter, Filter, Filter, Filter, Filter,                 Sink): Sink
+      chain: function(Filter, Filter, Filter, Filter, Filter, Filter, Filter,         Sink): Sink
+      chain: function(Filter, Filter, Filter, Filter, Filter, Filter, Filter, Filter, Sink): Sink
       error: function(string): Sink
       file: function(FILE, ? string, ? integer): Sink
       null: function(): Sink
       simplify: function(FancySink): Sink
-      table: function({string}): Sink, {string}
+      table: function(? {string}): Sink, {string}
    end
    record source
       cat: function(Source, ...: Source): Source
-      chain: function(Source, Filter): Source -- simplified
+      chain: function(Source, Filter, ...: Filter): Source
       empty: function(): Source
       error: function(string): Source
       file: function(FILE, ? string, ? integer): Source
       rewind: function(Source): RewindSource
       simplify: function(FancySource): Source
       string: function(string): Source
-      table: function({string}): Source, {string}
+      table: function({string}): Source
    end
 end
 
