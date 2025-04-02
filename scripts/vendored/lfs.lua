@@ -130,7 +130,7 @@ function lfs.attributes(path, sel)
 
 
 
-   local f, e, n = io.open(path .. '/', 'r')
+   local f, _, n = io.open(path .. '/', 'r')
    if f then
 
       f:close()

@@ -130,7 +130,7 @@ function lfs.attributes(path: string, sel: lfs.AttributeSelFM): lfs.FileMode
    -- dir      |       works         | works
    -- notexist |        No such file or directory, 2
 
-   local f, e, n = io.open(path .. '/', 'r')
+   local f, _, n = io.open(path .. '/', 'r')
    if f then
       -- we seem to be on unix => this must be a directory
       f:close()
