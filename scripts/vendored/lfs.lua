@@ -35,6 +35,8 @@ local lfs = { DirObj = {} }
 
 local is_windows = (os.getenv('OS') or ''):match('[Ww]indows')
 
+local TO_NUL = is_windows and ' 1>NUL 2>NUL' or ' 1>/dev/null 2>/dev/null'
+
 local function escapepath(path)
    if is_windows then
 
@@ -85,7 +87,7 @@ function lfs.dir(path)
 end
 
 function lfs.mkdir(path)
-   local worked, why, num = os.execute('mkdir ' .. escapepath(path))
+   local worked, why, num = os.execute('mkdir ' .. escapepath(path) .. TO_NUL)
    if worked then
       return true, nil, nil
    elseif why == 'signal' then
@@ -96,7 +98,7 @@ function lfs.mkdir(path)
 end
 
 function lfs.rmdir(path)
-   local worked, why, num = os.execute('rmdir ' .. escapepath(path))
+   local worked, why, num = os.execute('rmdir ' .. (is_windows and '/S /Q ' or '--ignore-fail-on-non-empty ') .. escapepath(path) .. TO_NUL)
    if worked then
       return true, nil, nil
    elseif why == 'signal' then
@@ -130,7 +132,7 @@ function lfs.attributes(path, sel)
 
 
 
-   local f, e, n = io.open(path .. '/', 'r')
+   local f, _, n = io.open(path .. '/', 'r')
    if f then
 
       f:close()
