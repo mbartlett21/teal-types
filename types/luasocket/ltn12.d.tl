@@ -30,7 +30,7 @@ local record ltn12
       file: function(FILE, ? string, ? integer): Sink
       null: function(): Sink
       simplify: function(FancySink): Sink
-      table: function({string}): Sink, {string}
+      table: function(? {string}): Sink, {string}
    end
    record source
       cat: function(Source, ...: Source): Source
