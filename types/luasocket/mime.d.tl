@@ -21,14 +21,14 @@ local record mime
    wrapt: {string:BuildFn}
 
    decode: function(Encoding): Filter
-   encode: function(Encoding, Mode): Filter
+   encode: function(Encoding, ? Mode): Filter
 
    stuff: function(): Filter
 
    wrap: function(string, integer): Filter
    wrap: function(Encoding): Filter
 
-   b64: function(string, string): string, string
+   b64: function(string, ? string): string, string
 
    dot: function(integer, string): string, integer
 
@@ -38,7 +38,7 @@ local record mime
 
    qpwrp: function(integer, string, integer): string, integer
 
-   unb64: function(string, string): string, string
+   unb64: function(string, ? string): string, string
 
    unqp: function(string, string): string, string
 
