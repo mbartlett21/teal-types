@@ -20,7 +20,7 @@ local record socket
          "closed"
          "timeout"
       end
-      receive: function(TCP, TCPReceivePattern|integer, string): string, TCPReceiveError
+      receive: function(TCP, ? TCPReceivePattern|integer, ? string): string, TCPReceiveError
 
       send: function(TCP, string, ? integer, ? integer): integer, string, integer
 
@@ -47,7 +47,7 @@ local record socket
          on: boolean
          timeout: integer
       end
-      setoption: function(TCP, TCPOption): integer
+      setoption: function(TCP, TCPOption, ? boolean): integer
       setoption: function(TCP, TCPLinger, TCPLingerOption): integer
 
       -- master, client, and server methods
@@ -63,7 +63,7 @@ local record socket
          "b"
          "t"
       end
-      settimeout: function(TCP, integer, TCPTimeoutMode)
+      settimeout: function(TCP, integer, ? TCPTimeoutMode)
    end
    record UDP
       close: function(UDP)
@@ -75,15 +75,15 @@ local record socket
       enum UDPTimeout
          "timeout"
       end
-      receive: function(UDP, integer): string, UDPTimeout
+      receive: function(UDP, ? integer): string, UDPTimeout
 
-      receivefrom: function(UDP, integer): string, string, integer, UDPTimeout
+      receivefrom: function(UDP, ? integer): string, string, integer, UDPTimeout
 
       send: function(UDP, string): integer, string
 
       sendto: function(UDP, string, string, integer): integer, string
 
-      setpeername: function(UDP, string, integer): integer, string
+      setpeername: function(UDP, string, ? integer): integer, string
 
       setsockname: function(UDP, string, integer): integer, string
 
@@ -114,21 +114,21 @@ local record socket
       canonic: {string: string}
    end
 
-   bind: function(string, integer, integer): TCP
+   bind: function(string, integer, ? integer): TCP
 
-   connect: function(string, integer, string, integer): TCP
+   connect: function(string, integer, ? string, ? integer): TCP
 
    _DEBUG: boolean
 
    newtry: function(function): function
 
-   protect: function(function): function
+   protect: function<A>(A): A
 
    -- tagged records/Table Union types would be nice here,
    -- as this should be {TCP|UDP}
    -- but I imagine this should be fine for most uses
-   select: function({UDP}, {UDP}, integer): {UDP}, {UDP}, string
-   select: function({TCP}, {TCP}, integer): {TCP}, {TCP}, string
+   select: function({UDP}, {UDP}, ? number): {UDP}, {UDP}, string
+   select: function({TCP}, {TCP}, ? number): {TCP}, {TCP}, string
 
    enum SinkMode
       "http-chunked"
@@ -141,7 +141,7 @@ local record socket
 
    skip: function(integer, ...: any): any...
 
-   sleep: function(integer)
+   sleep: function(number)
 
    enum SourceMode
       "http-chunked"
@@ -149,10 +149,10 @@ local record socket
       "until-closed"
    end
 
-   source: function(SourceMode, TCP, integer): Source
-   source: function(SourceMode, UDP, integer): Source
+   source: function(SourceMode, TCP, ? integer): Source
+   source: function(SourceMode, UDP, ? integer): Source
 
-   gettime: function(): integer
+   gettime: function(): number
 
    try: function(...: any): any...
 
