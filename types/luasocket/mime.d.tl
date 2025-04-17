@@ -21,7 +21,7 @@ local record mime
    wrapt: {string:BuildFn}
 
    decode: function(Encoding): Filter
-   encode: function(Encoding, Mode): Filter
+   encode: function(Encoding, ? Mode): Filter
 
    stuff: function(): Filter
 

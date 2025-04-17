@@ -26,6 +26,8 @@ local record ltn12
    end
    record sink
       chain: function(Filter, Sink): Sink -- simplified
+      chain: function(Filter, Filter, Sink): Sink -- simplified
+      chain: function(Filter, Filter, Filter, Sink): Sink -- simplified
       error: function(string): Sink
       file: function(FILE, ? string, ? integer): Sink
       null: function(): Sink
@@ -34,7 +36,7 @@ local record ltn12
    end
    record source
       cat: function(Source, ...: Source): Source
-      chain: function(Source, Filter): Source -- simplified
+      chain: function(Source, Filter...): Source
       empty: function(): Source
       error: function(string): Source
       file: function(FILE, ? string, ? integer): Source
