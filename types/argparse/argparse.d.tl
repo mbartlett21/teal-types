@@ -15,7 +15,7 @@ local record argparse
 
 		error: function(self: Parser, error: string)
 
-		argument: function(self: Parser, name: string, description: string): Argument
+		argument: function(self: Parser, name: string, description?: string): Argument
 
 		get_usage: function(self: Parser): string
 		get_help: function(self: Parser): string
@@ -28,11 +28,11 @@ local record argparse
 
 		command: function(self: Parser, name: string, description?: string, epilog?: string): Command
 
-		add_help: function(self: Parser, boolean)
+		add_help: function(self: Parser, ? boolean)
 
 		help_max_width: function(self: Parser, number): Parser
-		add_help_command: function(self: Parser, string | {string: any}): Parser
-		add_complete_command: function(self: Parser, string | {string: any}): Parser
+		add_help_command: function(self: Parser, ? string | {string: any}): Parser
+		add_complete_command: function(self: Parser, ? string | {string: any}): Parser
 
 		-- TODO: should be Argument | Option
 		mutex: function(self: Parser, ...: any)
@@ -43,7 +43,7 @@ local record argparse
 			epilog: string
 		end
 		metamethod __call: function(Parser, Opts): Parser
-		metamethod __call: function(Parser, string, string, string): Parser
+		metamethod __call: function(Parser, string, ? string, ? string): Parser
 	end
 
 	type ActionCallback = function(args: Args, index: string, val: string | boolean | {string}, overwrite: boolean)
@@ -90,11 +90,11 @@ local record argparse
 		summary: function(self: Command, summary: string): Command
 		description: function(self: Command, description: string): Command
 
-		argument: function(self: Command, name: string, description: string): Argument
+		argument: function(self: Command, name: string, description?: string): Argument
 
 		option: function(self: Command, name: string, description?: string): Option
 
-		flag: function(self: Command, string, string): Option
+		flag: function(self: Command, string, ? string): Option
 
 		handle_options: function(self: Command, boolean): Command
 	end
