@@ -1,3 +1,7 @@
+--[=[
+
+
+
 local interface NodeDef
 
 
@@ -320,19 +324,19 @@ global record core
    register_on_player_inventory_action:    function(function(player: ObjectRef, action: Action, ioventory: InvRef, inventory_info: InvInfo))
    register_on_protection_violation: function(function(pos: vector, name: string))
    register_on_item_eat: function(function(hp_change: number, replace_with_item: TODO, itemstack: ItemStack, user: ObjectRef, pointed_thing: TODO): ItemStack)
-   register_on_item_pickup
-   register_on_priv_grant
-   register_on_priv_revoke
-   register_can_bypass_userlimit
-   register_on_modchannel_message
-   register_on_liquid_transformed
-   register_on_mapblocks_changed
+   -- register_on_item_pickup
+   -- register_on_priv_grant
+   -- register_on_priv_revoke
+   -- register_can_bypass_userlimit
+   -- register_on_modchannel_message
+   -- register_on_liquid_transformed
+   -- register_on_mapblocks_changed
 
    settings: {string:any} -- TODO
    -- setting_get_pos: function(string): vector
 
    string_to_privs: function(string, delim ?: string): {string:boolean}
-   privs_to_string: functoin({string:boolean}, delim ?: string): string
+   privs_to_string: function({string:boolean}, delim ?: string): string
    get_player_privs: function(name: string): {string:boolean}
    check_player_privs: function(player_or_name: Player | string, {string:boolean}): boolean, {string:boolean}
    check_player_privs: function(player_or_name: Player | string, string, ...: string): boolean, {string:boolean}
@@ -351,6 +355,8 @@ end
 
 global dump2 = LuantiGlobals.dump2
 global dump = LuantiGlobals.dump
+
+]=]
 
 -- luanti does extension methods on the main Lua libraries
 global record ltable
@@ -390,18 +396,18 @@ end
 
 global record lmath
    hypot: function(number, number): number
-      = macroexp(...) return ((math as table).hypot as function)(...) end
+      = macroexp(...): number return ((math as table).hypot as function)(...) end
    sign: function(number, tol ?: number): integer
-      = macroexp(...) return ((math as table).sign as function)(...) end
+      = macroexp(...): integer return ((math as table).sign as function)(...) end
    factorial: function(integer): integer
-      = macroexp(...) return ((math as table).factorial as function)(...) end
+      = macroexp(...): integer return ((math as table).factorial as function)(...) end
    round: function(number): integer
-      = macroexp(...) return ((math as table).round as function)(...) end
+      = macroexp(...): integer return ((math as table).round as function)(...) end
 end
 
 global record lstring
    split: function(str: string, sep ?: string, include_empty ?: boolean, max_splits ?: integer, sep_is_pattern ?: boolean): {string}
-      = macroexp(...) return ((string as table).split as function)(...) end
+      = macroexp(...): {string} return ((string as table).split as function)(...) end
    trim: function(str: string): string
-      = macroexp(...) return ((string as table).trim as function)(...) end
+      = macroexp(...): string return ((string as table).trim as function)(...) end
 end
