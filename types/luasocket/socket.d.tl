@@ -120,7 +120,7 @@ local record socket
 
    _DEBUG: boolean
 
-   newtry: function(function): function
+   newtry: function(function()): function(...: any): any...
 
    protect: function<A>(A): A
 
@@ -139,6 +139,7 @@ local record socket
    sink: function(SinkMode, UDP): Sink
    sink: function(SinkMode, TCP): Sink
 
+   -- would be nice to have special casing here for constant arguments
    skip: function(integer, ...: any): any...
 
    sleep: function(number)
@@ -154,6 +155,8 @@ local record socket
 
    gettime: function(): number
 
+   -- this really should be something like:
+   -- try: function<A:{Type}>(unpack(A)): unpack(A)
    try: function(...: any): any...
 
    _VERSION: string
